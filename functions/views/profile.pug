@@ -1,30 +1,13 @@
 extends layout
 
 block content
-  - var title = 'OdinBook';
-  - var user = 'John';
-  - var posts = [];
-  .row
-   .col-lg-3(style='border-right: 1px solid gray;')
-     // Left column for activites
-     h1.display-6 #{user}
-     ul
-      li
-       a(href="") Watch
-      li
-       a(href="") Events
-      li
-       a(href="") Friends
-      li
-       a(href="") Memories
-     hr.my-4
-     h1.display-6 Shortcuts
-     ul
-      li
-       a(href="")
-   .col-lg-6(id='timeline')
-     // Feed goes here
-     h4.form-title New Post
+    .row
+     .col-lg-10
+      .jumbotron
+       i Add hero image
+      i= user.picture
+      h1= user.name
+    .col-lg-8
      form(action='/posts/new', method='post')
      div.form-group
       // user image
@@ -34,10 +17,9 @@ block content
         input(type="file", style='display: none;')
       button.btn.btn-sm.btn-primary(id='submitPost',type='submit') Post
       hr.my-3
-      each post in posts
-       div.card
+     each post in userPosts
+      div.card
         .card-header
-         h6= post.user
          span= post.timestamp
         .card-body
          div= post.content
@@ -50,12 +32,12 @@ block content
         .card-footer
          form.form-group(action='/posts/#{post.id}/comments/new', method='post')
           textarea.form-control-sm(name='comment', placeholder='Add comment')
-   .col-lg-3(style='border-left: 1px solid gray;')
-    // Right column for profile info + friends
-    h1.display-6 Add
-     i
-    hr.my-4
-    h1.display-6 Birthdays
-    hr.my-4
-    h1.display-6 Friends
-
+    .col-lg-4
+     - var numFR = friendRequests.length;
+     - var numFriends = userFriends.length;
+     h1 You have #{numFR} friend requests!
+      a(href='/user/friend-requests/') View
+     h4 You have #{numFriends} friends
+      a(href='/users/friends') See all
+     
+    
